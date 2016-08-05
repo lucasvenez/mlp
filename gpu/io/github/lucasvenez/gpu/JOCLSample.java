@@ -30,7 +30,7 @@ public class JOCLSample {
 	public static void main(String args[]) {
 
 		// Create input- and output data
-		int n = 10;
+		int n = 400;
 
 		float srcArrayA[] = new float[n];
 		float srcArrayB[] = new float[n];
@@ -149,8 +149,7 @@ public class JOCLSample {
 
 		System.out.println("Test " + (passed ? "PASSED" : "FAILED"));
 
-		if (n <= 10)
-			System.out.println("Result: " + java.util.Arrays.toString(dstArray));
+		System.out.println("Result: " + java.util.Arrays.toString(dstArray));
 
 		long startTime = System.currentTimeMillis();
 
