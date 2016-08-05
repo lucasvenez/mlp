@@ -1,4 +1,4 @@
-package br.edu.ifsp.mlp;
+package io.github.lucasvenez.mlp;
 
 import java.util.ArrayList;
 import java.util.Arrays;

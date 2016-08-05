@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build-jar" name="medical-database-analysis">
+	<property environment="env" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.8" />
+	<property name="source" value="1.8" />
+
+	<property name="build.dir" value="bin" />
+	<property name="gpu.dir" value="gpu" />
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="../" />
+	<property name="jar.file" value="${jar.dir}/mlpocl.jar" />
+	<property name="manifest.file" value="${jar.dir}/MANIFEST.MF" />
+
+	<property name="main.class" value="io.github.lucasvenez.JOCLSample" />
+
+	<path id="external.jars">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<path id="project.classpath">
+		<pathelement location="${gpu.dir}" />
+		<path refid="external.jars" />
+	</path>
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${jar.dir}" />
+		<copy includeemptydirs="false" todir="${build.dir}">
+			<fileset dir="${gpu.dir}">
+				<exclude name="**/*.launch" />
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="cleanall" depends="clean" />
+
+	<target name="build" depends="init">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" classpathref="project.classpath">
+			<src path="${src.dir}" />
+			<src path="${gpu.dir}" />
+		</javac>
+	</target>
+
+	<target name="build-jar" depends="build">
+
+		<manifest file="${manifest.file}">
+			<attribute name="built-by" value="${user.name}" />
+			<attribute name="Main-Class" value="${main.class}" />
+		</manifest>
+
+		<jar destfile="${jar.file}" basedir="${build.dir}" manifest="${manifest.file}">
+			<fileset dir="${classes.dir}" includes="**/*.class" />
+			<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
+		</jar>
+	</target>
+</project>

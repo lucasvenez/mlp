@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import io.github.lucasvenez.mlp.MultilayerPerceptron;
+
 /**
  * This test uses weights and biases calculated with <a href="https://github.com/cbergmeir/RSNNS">RSNNS simulator</a>. This network receives three inputs:
  * two boolean values (0 = false, 1 = true) and an indicator of the logical operation 
