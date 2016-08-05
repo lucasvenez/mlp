@@ -30,7 +30,7 @@ public class JOCLSample {
 	public static void main(String args[]) {
 
 		// Create input- and output data
-		int n = 400;
+		int n = 40000;
 
 		float srcArrayA[] = new float[n];
 		float srcArrayB[] = new float[n];
