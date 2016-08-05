@@ -43,7 +43,7 @@ public class JOCLSample {
 		// The platform, device type and device number
 		// that will be used
 		final int platformIndex = 0;
-		final long deviceType = CL_DEVICE_TYPE_ALL;
+		final long deviceType = CL_DEVICE_TYPE_GPU;
 		final int deviceIndex = 0;
 
 		// Enable exceptions and subsequently omit error checks in this sample
@@ -72,6 +72,7 @@ public class JOCLSample {
 		cl_device_id devices[] = new cl_device_id[numDevices];
 		clGetDeviceIDs(platform, deviceType, numDevices, devices, null);
 		cl_device_id device = devices[deviceIndex];
+		System.out.println(device);
 
 		// Create a context for the selected device
 		cl_context context = clCreateContext(contextProperties, 1, new cl_device_id[] { device }, null, null, null);
