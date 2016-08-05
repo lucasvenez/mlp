@@ -4,22 +4,29 @@ public class MultilayerPerceptron {
 
 	private Double[] inputs;
 
-	private Double[] inputBiases;
-
-	private Neuron[] hiddenLayer;
+	private Neuron[][] hiddenLayers;
 
 	private Neuron[] outputLayer;
 
-	public MultilayerPerceptron(Double[] inputLayerValues, int hiddenLayerSize, int outputLayerSize) {
+	
+	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int[] neurosPerHiddenLayer, int outputLayerSize) {
+		
+	}
+	
+	/**
+	 * This constructor infers the mlp has only one hidden layer.
+	 * @param inputLayerValues
+	 * @param hiddenLayerSize
+	 * @param outputLayerSize
+	 */
+	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int outputLayerSize) {
 
-		this.inputs = inputLayerValues;
+		this.inputs = new Double[inputLayerSize];
 
-		this.inputBiases = new Double[inputLayerValues.length];
-
-		this.hiddenLayer = new Neuron[hiddenLayerSize];
+		this.hiddenLayers = new Neuron[1][hiddenLayerSize];
 
 		for (int i = 0; i < hiddenLayerSize; i++)
-			this.hiddenLayer[i] = new Neuron();
+			this.hiddenLayers[0][i] = new Neuron();
 
 		this.outputLayer = new Neuron[outputLayerSize];
 
@@ -35,20 +42,12 @@ public class MultilayerPerceptron {
 		this.inputs = inputs;
 	}
 
-	public Double[] getInputBiases() {
-		return inputBiases;
+	public Neuron[][] getHiddenLayers() {
+		return hiddenLayers;
 	}
 
-	public void setInputBiases(Double[] inputBiases) {
-		this.inputBiases = inputBiases;
-	}
-
-	public Neuron[] getHiddenLayer() {
-		return hiddenLayer;
-	}
-
-	public void setHiddenLayer(Neuron[] hiddenLayer) {
-		this.hiddenLayer = hiddenLayer;
+	public void setHiddenLayer(Neuron[][] hiddenLayers) {
+		this.hiddenLayers = hiddenLayers;
 	}
 
 	public Neuron[] getOutputLayer() {
@@ -59,45 +58,27 @@ public class MultilayerPerceptron {
 		this.outputLayer = outputLayer;
 	}
 
-	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int outputLayerSize) {
-
-		this.inputs = new Double[inputLayerSize];
-
-		this.inputBiases = new Double[inputLayerSize];
-
-		this.hiddenLayer = new Neuron[hiddenLayerSize];
-
-		for (int i = 0; i < hiddenLayerSize; i++)
-			this.hiddenLayer[i] = new Neuron();
-
-		this.outputLayer = new Neuron[outputLayerSize];
-
-		for (int i = 0; i < outputLayerSize; i++)
-			this.outputLayer[i] = new Neuron();
-	}
-
 	public void setBiases(Double[] biases) {
 
-		int j = 0;
-
-		for (int i = 0; i < inputs.length; i++)
-			this.inputBiases[i] = biases[j++];
-
-		for (int i = 0; i < hiddenLayer.length; i++)
-			hiddenLayer[i].setBias(biases[j++]);
+		int k = 0;
+		
+		for (int i = 0; i < hiddenLayers.length; i++)
+			for (int j = 0; j < hiddenLayers[i].length; j++)
+				hiddenLayers[i][j].setBias(biases[k++]);
 
 		for (int i = 0; i < outputLayer.length; i++)
-			outputLayer[i].setBias(biases[j++]);
+			outputLayer[i].setBias(biases[k++]);
 	}
 
 	public Double[] forward() throws Exception {
 
 		Double[] inputOutput = this.inputs;
 
-		Double[] hiddenOutput = new Double[this.hiddenLayer.length];
+		Double[] hiddenOutput = new Double[this.hiddenLayers.length];
 
-		for (int i = 0; i < this.hiddenLayer.length; i++)
-			hiddenOutput[i] = this.hiddenLayer[i].activation(inputOutput);
+		for (int i = 1; i < this.hiddenLayers.length; i++)
+			for 
+			hiddenOutput[i] = this.hiddenLayers[i].activation(inputOutput);
 
 		Double[] output = new Double[this.outputLayer.length];
 
@@ -111,12 +92,12 @@ public class MultilayerPerceptron {
 
 		int q = 0;
 
-		for (int i = 0; i < this.hiddenLayer.length; i++)
+		for (int i = 0; i < this.hiddenLayers.length; i++)
 			for (int j = 0; j < this.inputs.length; j++)
-				hiddenLayer[i].setWeight(j, weights[q++]);
+				hiddenLayers[i].setWeight(j, weights[q++]);
 
 		for (int i = 0; i < this.outputLayer.length; i++)
-			for (int j = 0; j < this.hiddenLayer.length; j++)
+			for (int j = 0; j < this.hiddenLayers.length; j++)
 				outputLayer[i].setWeight(j, weights[q++]);
 	}
 }
