@@ -26,9 +26,12 @@ public class JOCLSample {
 	 * @param args
 	 *            Not used
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String args[]) {
+
 		// Create input- and output data
 		int n = 10;
+
 		float srcArrayA[] = new float[n];
 		float srcArrayB[] = new float[n];
 		float dstArray[] = new float[n];
@@ -36,9 +39,6 @@ public class JOCLSample {
 			srcArrayA[i] = i;
 			srcArrayB[i] = i;
 		}
-		Pointer srcA = Pointer.to(srcArrayA);
-		Pointer srcB = Pointer.to(srcArrayB);
-		Pointer dst = Pointer.to(dstArray);
 
 		// The platform, device type and device number
 		// that will be used
@@ -73,6 +73,15 @@ public class JOCLSample {
 		clGetDeviceIDs(platform, deviceType, numDevices, devices, null);
 		cl_device_id device = devices[deviceIndex];
 		System.out.println(device);
+
+		/**
+		 * Counting time
+		 */
+		long startTimeGPU = System.currentTimeMillis();
+
+		Pointer srcA = Pointer.to(srcArrayA);
+		Pointer srcB = Pointer.to(srcArrayB);
+		Pointer dst = Pointer.to(dstArray);
 
 		// Create a context for the selected device
 		cl_context context = clCreateContext(contextProperties, 1, new cl_device_id[] { device }, null, null, null);
@@ -121,6 +130,8 @@ public class JOCLSample {
 		clReleaseCommandQueue(commandQueue);
 		clReleaseContext(context);
 
+		System.out.println("GPU Time: " + (System.currentTimeMillis() - startTimeGPU));
+		
 		// Verify the result
 		boolean passed = true;
 
@@ -140,5 +151,14 @@ public class JOCLSample {
 
 		if (n <= 10)
 			System.out.println("Result: " + java.util.Arrays.toString(dstArray));
+
+		long startTime = System.currentTimeMillis();
+
+		for (int i = 0; i < n; i++)
+			dstArray[i] = srcArrayA[i] * srcArrayB[i];
+		
+		System.out.println("CPU time: " + (System.currentTimeMillis() - startTime));
+		
+		System.out.println("Result: " + java.util.Arrays.toString(dstArray));
 	}
 }
