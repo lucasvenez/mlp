@@ -147,17 +147,11 @@ public class JOCLSample {
 			}
 		}
 
-		System.out.println("Test " + (passed ? "PASSED" : "FAILED"));
-
-		System.out.println("Result: " + java.util.Arrays.toString(dstArray));
-
 		long startTime = System.currentTimeMillis();
 
 		for (int i = 0; i < n; i++)
 			dstArray[i] = srcArrayA[i] * srcArrayB[i];
 		
 		System.out.println("CPU time: " + (System.currentTimeMillis() - startTime));
-		
-		System.out.println("Result: " + java.util.Arrays.toString(dstArray));
 	}
 }
