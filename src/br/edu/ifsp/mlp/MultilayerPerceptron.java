@@ -8,13 +8,14 @@ public class MultilayerPerceptron {
 
 	private Neuron[] outputLayer;
 
-	
-	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int[] neurosPerHiddenLayer, int outputLayerSize) {
-		
+	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int[] neurosPerHiddenLayer,
+			int outputLayerSize) {
+
 	}
-	
+
 	/**
 	 * This constructor infers the mlp has only one hidden layer.
+	 * 
 	 * @param inputLayerValues
 	 * @param hiddenLayerSize
 	 * @param outputLayerSize
@@ -61,7 +62,7 @@ public class MultilayerPerceptron {
 	public void setBiases(Double[] biases) {
 
 		int k = 0;
-		
+
 		for (int i = 0; i < hiddenLayers.length; i++)
 			for (int j = 0; j < hiddenLayers[i].length; j++)
 				hiddenLayers[i][j].setBias(biases[k++]);
@@ -72,13 +73,18 @@ public class MultilayerPerceptron {
 
 	public Double[] forward() throws Exception {
 
-		Double[] inputOutput = this.inputs;
+		Double[] hiddenOutput = this.inputs;
 
-		Double[] hiddenOutput = new Double[this.hiddenLayers.length];
+		/*
+		 * FIXME
+		 */
+		for (int i = 1; i < this.hiddenLayers.length; i++) {
 
-		for (int i = 1; i < this.hiddenLayers.length; i++)
-			for 
-			hiddenOutput[i] = this.hiddenLayers[i].activation(inputOutput);
+			Double localHiddenOutput[] = new Double[this.hiddenLayers[i].length];
+
+			for (int j = 0; j < this.hiddenLayers[i].length; j++)
+				localHiddenOutput[j] = this.hiddenLayers[i - 1][j].activation(hiddenOutput);
+		}
 
 		Double[] output = new Double[this.outputLayer.length];
 
@@ -92,9 +98,13 @@ public class MultilayerPerceptron {
 
 		int q = 0;
 
-		for (int i = 0; i < this.hiddenLayers.length; i++)
+		for (int i = 0; i < this.hiddenLayers[0].length; i++)
 			for (int j = 0; j < this.inputs.length; j++)
-				hiddenLayers[i].setWeight(j, weights[q++]);
+				hiddenLayers[0][i].setWeight(j, weights[q++]);
+
+		for (int i = 1; i < this.hiddenLayers.length; i++)
+			for (int j = 0; j < this.hiddenLayers[i].length; j++)
+				hiddenLayers[i][j].setWeight(j, weights[q++]);
 
 		for (int i = 0; i < this.outputLayer.length; i++)
 			for (int j = 0; j < this.hiddenLayers.length; j++)
