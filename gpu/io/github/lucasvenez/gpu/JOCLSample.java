@@ -34,7 +34,7 @@ public class JOCLSample {
 	public static void main(String args[]) {
 
 		// Create input- and output data
-		int n = 4000000;
+		int n = 8000000;
 
 		float srcArrayA[] = new float[n];
 		float srcArrayB[] = new float[n];
@@ -78,11 +78,6 @@ public class JOCLSample {
 		cl_device_id device = devices[deviceIndex];
 		System.out.println(device);
 
-		/**
-		 * Counting time
-		 */
-		long startTimeGPU = System.currentTimeMillis();
-
 		Pointer srcA = Pointer.to(srcArrayA);
 		Pointer srcB = Pointer.to(srcArrayB);
 		Pointer dst = Pointer.to(dstArray);
@@ -119,12 +114,19 @@ public class JOCLSample {
 		long global_work_size[] = new long[] { n };
 		long local_work_size[] = new long[] { 1 };
 
+		/**
+		 * Counting time
+		 */
+		long startTimeGPU = System.currentTimeMillis();
+		
 		// Execute the kernel
 		clEnqueueNDRangeKernel(commandQueue, kernel, 1, null, global_work_size, local_work_size, 0, null, null);
 
 		// Read the output data
 		clEnqueueReadBuffer(commandQueue, memObjects[2], CL_TRUE, 0, n * Sizeof.cl_float, dst, 0, null, null);
 
+		System.out.println("GPU Time: " + (System.currentTimeMillis() - startTimeGPU));
+		
 		// Release kernel, program, and memory objects
 		clReleaseMemObject(memObjects[0]);
 		clReleaseMemObject(memObjects[1]);
@@ -133,8 +135,6 @@ public class JOCLSample {
 		clReleaseProgram(program);
 		clReleaseCommandQueue(commandQueue);
 		clReleaseContext(context);
-
-		System.out.println("GPU Time: " + (System.currentTimeMillis() - startTimeGPU));
 		
 		// Verify the result
 		boolean passed = true;
