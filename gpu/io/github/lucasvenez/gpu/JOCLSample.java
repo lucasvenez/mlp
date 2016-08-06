@@ -16,9 +16,13 @@ public class JOCLSample {
 	/**
 	 * The source code of the OpenCL program to execute
 	 */
-	private static String programSource = "__kernel void " + "sampleKernel(__global const float *a,"
-			+ "             __global const float *b," + "             __global float *c)" + "{"
-			+ "    int gid = get_global_id(0);" + "    c[gid] = a[gid] * b[gid];" + "}";
+	private static String programSource = "__kernel void " + 
+	 "sampleKernel(__global const float *a,"+ 
+			"             __global const float *b," + 
+	 "             __global float *c)" + 
+			"{"			+ 
+	 "    int gid = get_global_id(0);" + 
+			"    c[gid] = a[gid] * b[gid];" + "}";
 
 	/**
 	 * The entry point of this sample
@@ -30,7 +34,7 @@ public class JOCLSample {
 	public static void main(String args[]) {
 
 		// Create input- and output data
-		int n = 40000;
+		int n = 4000000;
 
 		float srcArrayA[] = new float[n];
 		float srcArrayB[] = new float[n];
