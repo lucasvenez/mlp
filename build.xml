@@ -14,7 +14,7 @@
 	<property name="jar.file" value="${jar.dir}/mlpocl.jar" />
 	<property name="manifest.file" value="${jar.dir}/MANIFEST.MF" />
 
-	<property name="main.class" value="io.github.lucasvenez.gpu.JOCLSample" />
+	<property name="main.class" value="io.github.lucasvenez.gpu.JOCLSample_2_0_SVM" />
 
 	<path id="external.jars">
 		<fileset dir="${lib.dir}" includes="**/*.jar" />
