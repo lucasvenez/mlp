@@ -25,14 +25,14 @@ To traine that MLP use:
 ```Java
 Backpropagation back = new Backpropagation(mlp);
 
+/*
+ * Creating training data
+ */
 List<Integer[]> inputs = new ArrayList<Integer[]>();
 List<Integer[]> outputs = new ArrayList<Integer[]>();
 
 final int AND = 0, OR = 1, XOR = 2;
 
-/*
- * Creating training data
- */
 for (int i = 0; i < 2; i++)
 	for (int j = 0; j < 2; j++) {
 		inputs.add(new Integer[] {i,  j,  AND});
@@ -42,12 +42,12 @@ for (int i = 0; i < 2; i++)
 		outputs.add(new Integer[] {i + j > 0 ? 1 : 0});
 		
 		inputs.add(new Integer[] {i,  j,  XOR});
-		outputs.add(new Integer[] {i + j == 1  ? 1 : 0});
+		outputs.add(new Integer[] {i + j == 1 ? 1 : 0});
 	}
 
-back.setTrainingInput(inputs);
+back.setTraineInput(inputs);
 
-back.setTrainingOutput(outputs);
+back.setTraineOutput(outputs);
 
 back.traine();
 ```
