@@ -1,113 +1,56 @@
 package io.github.lucasvenez.mlp;
 
+import java.util.List;
+
+import br.edu.ifsp.mlp.HiddenLayer;
+import br.edu.ifsp.mlp.function.IdentityFunction;
+import io.github.lucasvenez.mlp.function.ActivationFunction;
+import io.github.lucasvenez.mlp.function.ThresholdFunction;
+
+/**
+ * 
+ * @author <a href="http://lucasvenez.github.io">Lucas Venezian Povoa</a>
+ *
+ */
 public class MultilayerPerceptron {
+	
+	private InputLayer inputLayer;
+	
+	private List<HiddenLayer> hiddenLayers;
+	
+	private OutputLayer outputLayer;
 
-	private Double[] inputs;
-
-	private Neuron[][] hiddenLayers;
-
-	private Neuron[] outputLayer;
-
-	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int[] neurosPerHiddenLayer,
-			int outputLayerSize) {
-
+	public void addHiddenLayer(int numberOfNeurons, ActivationFunction thresholdFunction) {
+		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * This constructor infers the mlp has only one hidden layer.
-	 * 
-	 * @param inputLayerValues
-	 * @param hiddenLayerSize
-	 * @param outputLayerSize
-	 */
-	public MultilayerPerceptron(int inputLayerSize, int hiddenLayerSize, int outputLayerSize) {
-
-		this.inputs = new Double[inputLayerSize];
-
-		this.hiddenLayers = new Neuron[1][hiddenLayerSize];
-
-		for (int i = 0; i < hiddenLayerSize; i++)
-			this.hiddenLayers[0][i] = new Neuron();
-
-		this.outputLayer = new Neuron[outputLayerSize];
-
-		for (int i = 0; i < outputLayerSize; i++)
-			this.outputLayer[i] = new Neuron();
+	public void setInputLayer(int i, IdentityFunction identityFunction) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public Double[] getInputs() {
-		return inputs;
+	public void addHiddenLayer(HiddenLayer hiddenLayer) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setInputs(Double[] inputs) {
-		this.inputs = inputs;
+	public void setOutputLayer(int i, ThresholdFunction thresholdFunction) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public Neuron[][] getHiddenLayers() {
-		return hiddenLayers;
+	public void process(Double ... inputs) {
+		// TODO Auto-generated method stub
+		
 	}
-
-	public void setHiddenLayer(Neuron[][] hiddenLayers) {
-		this.hiddenLayers = hiddenLayers;
-	}
-
-	public Neuron[] getOutputLayer() {
-		return outputLayer;
-	}
-
-	public void setOutputLayer(Neuron[] outputLayer) {
-		this.outputLayer = outputLayer;
-	}
-
-	public void setBiases(Double[] biases) {
-
-		int k = 0;
-
-		for (int i = 0; i < hiddenLayers.length; i++)
-			for (int j = 0; j < hiddenLayers[i].length; j++)
-				hiddenLayers[i][j].setBias(biases[k++]);
-
-		for (int i = 0; i < outputLayer.length; i++)
-			outputLayer[i].setBias(biases[k++]);
-	}
-
-	public Double[] forward() throws Exception {
-
-		Double[] hiddenOutput = this.inputs;
-
-		/*
-		 * FIXME
-		 */
-		for (int i = 1; i < this.hiddenLayers.length; i++) {
-
-			Double localHiddenOutput[] = new Double[this.hiddenLayers[i].length];
-
-			for (int j = 0; j < this.hiddenLayers[i].length; j++)
-				localHiddenOutput[j] = this.hiddenLayers[i - 1][j].activation(hiddenOutput);
-		}
-
-		Double[] output = new Double[this.outputLayer.length];
-
-		for (int i = 0; i < this.outputLayer.length; i++)
-			output[i] = this.outputLayer[i].activation(hiddenOutput);
-
-		return output;
-	}
-
-	public void setWeightsBetweenInputAndHidden(Double[] weights) {
-
-		int q = 0;
-
-		for (int i = 0; i < this.hiddenLayers[0].length; i++)
-			for (int j = 0; j < this.inputs.length; j++)
-				hiddenLayers[0][i].setWeight(j, weights[q++]);
-
-		for (int i = 1; i < this.hiddenLayers.length; i++)
-			for (int j = 0; j < this.hiddenLayers[i].length; j++)
-				hiddenLayers[i][j].setWeight(j, weights[q++]);
-
-		for (int i = 0; i < this.outputLayer.length; i++)
-			for (int j = 0; j < this.hiddenLayers.length; j++)
-				outputLayer[i].setWeight(j, weights[q++]);
+	
+	public void process(Integer ... inputs) {
+		
+		Double dInputs[] = new Double[inputs.length];
+		
+		for (int i = 0; i < dInputs.length; i++)
+			dInputs[i] = new Double(inputs[i]);
+		
+		this.process(dInputs);
 	}
 }

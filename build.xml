@@ -6,7 +6,7 @@
 	<property name="source" value="1.8" />
 
 	<property name="build.dir" value="bin" />
-	<property name="gpu.dir" value="gpu" />
+	<property name="cuda.dir" value="cuda" />
 	<property name="src.dir" value="src" />
 	<property name="lib.dir" value="lib" />
 	<property name="classes.dir" value="${build.dir}/classes" />
@@ -21,7 +21,7 @@
 	</path>
 
 	<path id="project.classpath">
-		<pathelement location="${gpu.dir}" />
+		<pathelement location="${cuda.dir}" />
 		<path refid="external.jars" />
 	</path>
 
@@ -30,7 +30,7 @@
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${jar.dir}" />
 		<copy includeemptydirs="false" todir="${build.dir}">
-			<fileset dir="${gpu.dir}">
+			<fileset dir="${cuda.dir}">
 				<exclude name="**/*.launch" />
 				<exclude name="**/*.java" />
 			</fileset>
@@ -47,7 +47,7 @@
 		<echo message="${ant.project.name}: ${ant.file}" />
 		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" classpathref="project.classpath">
 			<src path="${src.dir}" />
-			<src path="${gpu.dir}" />
+			<src path="${cuda.dir}" />
 		</javac>
 	</target>
 

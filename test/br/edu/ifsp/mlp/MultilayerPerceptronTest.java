@@ -1,10 +1,16 @@
 package br.edu.ifsp.mlp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
+import br.edu.ifsp.mlp.function.IdentityFunction;
+import br.edu.ifsp.mlp.function.SigmoidFunction;
 import io.github.lucasvenez.mlp.MultilayerPerceptron;
+import io.github.lucasvenez.mlp.function.ThresholdFunction;
 
 /**
  * This test uses weights and biases calculated with <a href="https://github.com/cbergmeir/RSNNS">RSNNS simulator</a>. This network receives three inputs:
@@ -15,68 +21,68 @@ import io.github.lucasvenez.mlp.MultilayerPerceptron;
  */
 public class MultilayerPerceptronTest {
 
-	public static final double TRUE  = 1;
-	
-	public static final double FALSE = 0;
-	
-	public static final double XOR   = 1;
-	
-	public static final double AND   = 2;
-	
-	public static final double OR    = 3;
-
 	@Test
-	public void test() {
+	public void mlpTest() {
+		
+		/*
+		 * Creating and configuring neural network 
+		 */
+		MultilayerPerceptron mlp = new MultilayerPerceptron();
+		
+		mlp.setInputLayer(10, new IdentityFunction());
+		
+		mlp.addHiddenLayer(2, new SigmoidFunction());
+		
+		HiddenLayer hiddenLayer = new HiddenLayer();
+		
+		hiddenLayer.addNeuron(new HiddenNeuron(new SigmoidFunction()));
+		
+		mlp.addHiddenLayer(hiddenLayer);
+		
+		mlp.setOutputLayer(1, new ThresholdFunction(0.5));
+		
+		/*
+		 * Training neural network
+		 */
+		Backpropagation back = new Backpropagation(mlp);
 
-		MultilayerPerceptron mlp = new MultilayerPerceptron(3, 6, 1);
+		final int TRUE = 1, FALSE = 0;
+		final int AND = 0, OR = 1, XOR = 2;
+		
+		/*
+		 * Creating training data
+		 */
+		List<Integer[]> inputs = new ArrayList<Integer[]>();
+		List<Integer[]> outputs = new ArrayList<Integer[]>();
 
-		mlp.setBiases(new Double[] { -0.0876190811395645, 0.217407286167145, 0.103654146194458, -10.6149482727051,
-				-1.18081986904144, -3.82895517349243, -3.88494157791138, -1.46863925457001, 0.804240643978119,
-				-0.469541519880295 });
-
-		mlp.setWeightsBetweenInputAndHidden(new Double[] { -0.845621883869171, -0.84678989648819, 4.63171911239624,
-				4.10689640045166, 4.08154153823853, -0.259971171617508, -5.0947060585022, -5.08982944488525,
-				6.00834178924561, 6.27885246276855, 6.28793430328369, -5.93942022323608, -0.0375205054879189,
-				-0.214145436882973, -0.145714998245239, -3.77608919143677, -3.77428007125854, 0.323262423276901,
-				10.5026502609253, 6.19403505325317, -9.94169330596924, -10.1965217590332, -0.862910747528076,
-				-5.33192253112793 });
-
-		try {
-
-			mlp.setInputs(new Double[] { TRUE, TRUE, XOR });
-
-			for (Double f : mlp.forward())
-				assertTrue(f < 0.5);
-
-			mlp.setInputs(new Double[] { TRUE, FALSE, XOR });
-
-			for (Double f : mlp.forward())
-				assertTrue(f >= 0.5);
-
-			mlp.setInputs(new Double[] { TRUE, FALSE, AND });
-
-			for (Double f : mlp.forward())
-				assertTrue(f < 0.5);
-			
-			mlp.setInputs(new Double[] { TRUE, TRUE, AND });
-
-			for (Double f : mlp.forward())
-				assertTrue(f >= 0.5);
-			
-			mlp.setInputs(new Double[] { FALSE, FALSE, OR });
-
-			for (Double f : mlp.forward())
-				assertTrue(f < 0.5);
-			
-			mlp.setInputs(new Double[] { TRUE, TRUE, OR });
-
-			for (Double f : mlp.forward())
-				assertTrue(f >= 0.5);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++) {
+				inputs.add(new Integer[] {i,  j,  AND});
+				outputs.add(new Integer[] {i + j == 2 ? 1 : 0});
+				
+				inputs.add(new Integer[] {i,  j,  OR});
+				outputs.add(new Integer[] {i + j > 0 ? 1 : 0});
+				
+				inputs.add(new Integer[] {i,  j,  XOR});
+				outputs.add(new Integer[] {i + j == 1 ? 1 : 0});
+			}
+		
+		back.setTraineInput(inputs);
+		
+		back.setTraineOutput(outputs);
+		
+		back.traine();
+		
+		/*
+		 * Using neural network
+		 */
+		
+		mlp.process(TRUE, TRUE, AND);
+		
+		mlp.process(FALSE, TRUE, OR);
+		
+		mlp.process(TRUE, TRUE, XOR);
+		
+		assertTrue(true);
 	}
-
 }
