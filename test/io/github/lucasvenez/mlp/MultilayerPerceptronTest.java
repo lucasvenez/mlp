@@ -1,4 +1,4 @@
-package br.edu.ifsp.mlp;
+package io.github.lucasvenez.mlp;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,10 +7,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.edu.ifsp.mlp.function.IdentityFunction;
-import br.edu.ifsp.mlp.function.SigmoidFunction;
-import io.github.lucasvenez.mlp.MultilayerPerceptron;
+import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.mlp.function.IdentityFunction;
+import io.github.lucasvenez.mlp.function.SigmoidFunction;
 import io.github.lucasvenez.mlp.function.ThresholdFunction;
+import io.github.lucasvenez.mlp.layer.HiddenLayer;
 
 /**
  * This test uses weights and biases calculated with <a href="https://github.com/cbergmeir/RSNNS">RSNNS simulator</a>. This network receives three inputs:
@@ -22,7 +23,7 @@ import io.github.lucasvenez.mlp.function.ThresholdFunction;
 public class MultilayerPerceptronTest {
 
 	@Test
-	public void mlpTest() {
+	public void mlpTest() throws NeuralNetworkFowardException {
 		
 		/*
 		 * Creating and configuring neural network 
@@ -35,7 +36,7 @@ public class MultilayerPerceptronTest {
 		
 		HiddenLayer hiddenLayer = new HiddenLayer();
 		
-		hiddenLayer.addNeuron(new HiddenNeuron(new SigmoidFunction()));
+		hiddenLayer.addNeuron(new Neuron(new SigmoidFunction()));
 		
 		mlp.addHiddenLayer(hiddenLayer);
 		
@@ -77,12 +78,10 @@ public class MultilayerPerceptronTest {
 		 * Using neural network
 		 */
 		
-		mlp.process(TRUE, TRUE, AND);
+		assertTrue(mlp.process(TRUE, TRUE, AND)[0] == 1.0);
 		
-		mlp.process(FALSE, TRUE, OR);
+		assertTrue(mlp.process(FALSE, TRUE, OR)[0] == 1.0);
 		
-		mlp.process(TRUE, TRUE, XOR);
-		
-		assertTrue(true);
+		assertTrue(mlp.process(TRUE, TRUE, XOR)[0] == 0.0);
 	}
 }

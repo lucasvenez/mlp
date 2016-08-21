@@ -1,8 +1,6 @@
-package br.edu.ifsp.mlp;
+package io.github.lucasvenez.mlp;
 
 import java.util.List;
-
-import io.github.lucasvenez.mlp.MultilayerPerceptron;
 
 public class Backpropagation {
 

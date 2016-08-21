@@ -30,7 +30,7 @@ public class ThresholdFunction implements ActivationFunction {
 	 * @throws InvalidActivation
 	 */
 	@Override
-	public double calculate(double x) {
+	public double process(double x) {
 
 		return x >= threshold ? 1.0 : 0.0;
 	}
