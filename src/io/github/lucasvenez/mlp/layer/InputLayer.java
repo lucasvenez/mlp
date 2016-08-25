@@ -6,12 +6,25 @@ import java.util.List;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.ActivationFunction;
 
+/**
+ * 
+ * @author <a href="http://lucasvenez.github.io">Lucas Venezian Povoa</a>
+ *
+ */
 public class InputLayer extends Layer {
 
+	/**
+	 * 
+	 */
 	public InputLayer() {
 		super(false);
 	}
 	
+	/**
+	 * 
+	 * @param numberOfNeurons
+	 * @param activationFunction
+	 */
 	public InputLayer(int numberOfNeurons, ActivationFunction activationFunction) {
 		super(numberOfNeurons, activationFunction);
 	}

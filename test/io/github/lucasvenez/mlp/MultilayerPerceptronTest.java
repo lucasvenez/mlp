@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import io.github.lucasvenez.mlp.exception.NeuralNetworkBuildingException;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.IdentityFunction;
 import io.github.lucasvenez.mlp.function.SigmoidFunction;
 import io.github.lucasvenez.mlp.function.ThresholdFunction;
-import io.github.lucasvenez.mlp.layer.HiddenLayer;
 
 /**
  * This test uses weights and biases calculated with <a href="https://github.com/cbergmeir/RSNNS">RSNNS simulator</a>. This network receives three inputs:
@@ -23,22 +23,16 @@ import io.github.lucasvenez.mlp.layer.HiddenLayer;
 public class MultilayerPerceptronTest {
 
 	@Test
-	public void mlpTest() throws NeuralNetworkFowardException {
+	public void mlpTest() throws NeuralNetworkFowardException, NeuralNetworkBuildingException {
 		
 		/*
 		 * Creating and configuring neural network 
 		 */
 		MultilayerPerceptron mlp = new MultilayerPerceptron();
 		
-		mlp.setInputLayer(10, new IdentityFunction());
+		mlp.setInputLayer(3, new IdentityFunction());
 		
-		mlp.addHiddenLayer(2, new SigmoidFunction());
-		
-		HiddenLayer hiddenLayer = new HiddenLayer();
-		
-		hiddenLayer.addNeuron(new Neuron(new SigmoidFunction()));
-		
-		mlp.addHiddenLayer(hiddenLayer);
+		mlp.addHiddenLayer(6, new SigmoidFunction());
 		
 		mlp.setOutputLayer(1, new ThresholdFunction(0.5));
 		
