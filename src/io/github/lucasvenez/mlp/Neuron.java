@@ -23,7 +23,9 @@ public class Neuron {
 	/**
 	 * 
 	 */
-	public Neuron() {}
+	public Neuron() {
+		
+	}
 
 	/**
 	 * 
@@ -99,7 +101,6 @@ public class Neuron {
 	 */
 	public void setLayer(Layer layer) {
 		this.parentLayer = layer;
-		this.initializeWeights();
 	}
 
 	/**
