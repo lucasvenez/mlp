@@ -21,18 +21,10 @@ public class MultilayerPerceptron {
 
 	private InputLayer inputLayer;
 
-	private final List<ProcessingLayer> hiddenLayers = new ArrayList<ProcessingLayer>();
+	private final List<ProcessingLayer> hiddenLayers 
+							= new ArrayList<ProcessingLayer>();
 
 	private ProcessingLayer outputLayer;
-
-	/**
-	 * 
-	 * @param numberOfNeurons
-	 * @param activationFunction
-	 */
-	public void addHiddenLayer(int numberOfNeurons, ActivationFunction activationFunction) {
-		hiddenLayers.add(new ProcessingLayer(numberOfNeurons, activationFunction));
-	}
 
 	/**
 	 * 
@@ -58,6 +50,15 @@ public class MultilayerPerceptron {
 			this.outputLayer.setPreviousLayer(this.inputLayer);
 	}
 
+	/**
+	 * 
+	 * @param numberOfNeurons
+	 * @param activationFunction
+	 */
+	public void addHiddenLayer(int numberOfNeurons, ActivationFunction activationFunction) throws NeuralNetworkBuildingException {
+		this.addHiddenLayer(new ProcessingLayer(numberOfNeurons, activationFunction));
+	}
+	
 	/**
 	 * 
 	 * @param hiddenLayer
@@ -104,8 +105,8 @@ public class MultilayerPerceptron {
 	 * 
 	 * @param numberOfNeurons
 	 */
-	public void setOutputLayer(int numberOfNeurons) {
-		this.outputLayer = new ProcessingLayer(numberOfNeurons, new IdentityFunction());
+	public void setOutputLayer(int numberOfNeurons) throws NeuralNetworkBuildingException {
+		this.setOutputLayer(numberOfNeurons, new IdentityFunction());
 	}
 
 	/**

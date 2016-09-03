@@ -13,7 +13,8 @@ public class ProcessingLayer implements Layer {
 
 	private Layer previousLayer;
 
-	private final List<ProcessingNeuron> neurons = new ArrayList<ProcessingNeuron>();
+	private final List<ProcessingNeuron> neurons = 
+			new ArrayList<ProcessingNeuron>();
 	
 	/**
 	 * 
