@@ -18,4 +18,8 @@ public class SigmoidFunction implements ActivationFunction {
 	public double process(double input) {
 		return 1.0 / (1.0 + exp(alpha * -input));
 	}
+	
+	public void setAlpha(double alpha) {
+		this.alpha = alpha;
+	}
 }

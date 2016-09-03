@@ -34,4 +34,8 @@ public class ThresholdFunction implements ActivationFunction {
 
 		return x >= threshold ? 1.0 : 0.0;
 	}
+
+	public void setThreshold(double threshold) {
+		this.threshold = threshold;
+	}
 }

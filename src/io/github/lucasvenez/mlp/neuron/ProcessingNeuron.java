@@ -38,10 +38,10 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 	 */
 	public Double process(List<Double> inputs) throws NeuralNetworkFowardException {
 
-		if (inputs.size() != this.weights.size() + (this.parentLayer.hasBiases() ? 1 : 0))
+		if (inputs.size() != this.weights.size())
 			throw new NeuralNetworkFowardException(
-					"The number of inputs (" + inputs.size() + ") should be equals to the number of weights ("
-							+ (this.weights.size() + (this.parentLayer.hasBiases() ? 1 : 0)) + ") at a neuron.");
+				"The number of inputs (" + inputs.size() + ") should be equals to the number of weights ("
+					+ (this.weights.size() + (this.parentLayer.hasBiases() ? 1 : 0)) + ") at a neuron.");
 
 		Double result = parentLayer.hasBiases() ? weights.get(0) : 0.0;
 
@@ -60,7 +60,7 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 				? this.parentLayer.getPreviousLayer().getNeurons().size() : 0;
 
 		for (int i = 0; i < numberOfConnections; i++)
-			weights.add(Math.random());
+			weights.add(Math.random() * (Math.random() < .5 ? -1 : 1));
 	}
 
 	/**

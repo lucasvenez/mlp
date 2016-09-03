@@ -1,6 +1,6 @@
 package io.github.lucasvenez.mlp;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,13 @@ import io.github.lucasvenez.mlp.exception.NeuralNetworkBuildingException;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.IdentityFunction;
 import io.github.lucasvenez.mlp.function.SigmoidFunction;
-import io.github.lucasvenez.mlp.function.ThresholdFunction;
+import io.github.lucasvenez.mlp.function.ThresholdSigmoidFunction;
 
 /**
  * This test uses weights and biases calculated with <a href="https://github.com/cbergmeir/RSNNS">RSNNS simulator</a>. This network receives three inputs:
  * two boolean values (0 = false, 1 = true) and an indicator of the logical operation 
  * (1 = xor, 2 = and, 3 = or). The result is the logical operation between the boolean values.  
+ * 
  * @author Lucas Venezian Povoa
  * 
  */
@@ -34,7 +35,11 @@ public class MultilayerPerceptronTest {
 		
 		mlp.addHiddenLayer(6, new SigmoidFunction());
 		
-		mlp.setOutputLayer(1, new ThresholdFunction(0.5));
+		mlp.addHiddenLayer(6, new SigmoidFunction());
+		
+		mlp.addHiddenLayer(6, new SigmoidFunction());
+		
+		mlp.setOutputLayer(1, new ThresholdSigmoidFunction());
 		
 		mlp.initializeWeightsRandomly();
 		
@@ -44,6 +49,7 @@ public class MultilayerPerceptronTest {
 		Backpropagation back = new Backpropagation(mlp);
 
 		final int TRUE = 1, FALSE = 0;
+	
 		final int AND = 0, OR = 1, XOR = 2;
 		
 		/*
@@ -74,10 +80,10 @@ public class MultilayerPerceptronTest {
 		 * Using neural network
 		 */
 		
-		assertTrue(mlp.process(TRUE, TRUE, AND)[0] == 1.0);
+		assertEquals(new Double(1.0), mlp.process(TRUE, TRUE, AND)[0]);
 		
-		assertTrue(mlp.process(FALSE, TRUE, OR)[0] == 1.0);
+		assertEquals(new Double(1.0), mlp.process(FALSE, TRUE, OR)[0]);
 		
-		assertTrue(mlp.process(TRUE, TRUE, XOR)[0] == 0.0);
+		assertEquals(new Double(0.0), mlp.process(TRUE, TRUE, XOR)[0]);
 	}
 }

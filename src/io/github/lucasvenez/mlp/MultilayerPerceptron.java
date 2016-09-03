@@ -67,8 +67,8 @@ public class MultilayerPerceptron {
 
 		Layer previousLayer;
 
-		if (hiddenLayers.size() > 1)
-			previousLayer = hiddenLayers.get(hiddenLayers.size() - 1);
+		if (this.hiddenLayers.size() > 0)
+			previousLayer = this.hiddenLayers.get(this.hiddenLayers.size() - 1);
 		else
 			previousLayer = this.inputLayer;
 
@@ -88,13 +88,13 @@ public class MultilayerPerceptron {
 	 */
 	public void setOutputLayer(int numberOfNeurons, ActivationFunction activationFunction)
 			throws NeuralNetworkBuildingException {
-
+		
 		this.outputLayer = new ProcessingLayer(numberOfNeurons, activationFunction);
 
 		Layer previousLayer;
 
-		if (hiddenLayers.size() > 0)
-			previousLayer = hiddenLayers.get(hiddenLayers.size() - 1);
+		if (this.hiddenLayers.size() > 0)
+			previousLayer = this.hiddenLayers.get(this.hiddenLayers.size() - 1);
 		else
 			previousLayer = this.inputLayer;
 
@@ -132,7 +132,9 @@ public class MultilayerPerceptron {
 		for (int i = 0; i < hiddenLayers.size(); i++)
 			outputs = hiddenLayers.get(i).process(outputs);
 
-		return this.outputLayer.process(outputs);
+		outputs = this.outputLayer.process(outputs);
+				
+		return outputs;
 	}
 
 	/**
