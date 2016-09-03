@@ -36,6 +36,8 @@ public class MultilayerPerceptronTest {
 		
 		mlp.setOutputLayer(1, new ThresholdFunction(0.5));
 		
+		mlp.initializeWeightsRandomly();
+		
 		/*
 		 * Training neural network
 		 */

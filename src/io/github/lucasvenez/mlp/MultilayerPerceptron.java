@@ -8,10 +8,9 @@ import io.github.lucasvenez.mlp.exception.NeuralNetworkBuildingException;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.ActivationFunction;
 import io.github.lucasvenez.mlp.function.IdentityFunction;
-import io.github.lucasvenez.mlp.layer.HiddenLayer;
+import io.github.lucasvenez.mlp.layer.ProcessingLayer;
 import io.github.lucasvenez.mlp.layer.InputLayer;
 import io.github.lucasvenez.mlp.layer.Layer;
-import io.github.lucasvenez.mlp.layer.OutputLayer;
 
 /**
  * 
@@ -22,9 +21,9 @@ public class MultilayerPerceptron {
 
 	private InputLayer inputLayer;
 
-	private final List<HiddenLayer> hiddenLayers = new ArrayList<HiddenLayer>();
+	private final List<ProcessingLayer> hiddenLayers = new ArrayList<ProcessingLayer>();
 
-	private OutputLayer outputLayer;
+	private ProcessingLayer outputLayer;
 
 	/**
 	 * 
@@ -32,7 +31,7 @@ public class MultilayerPerceptron {
 	 * @param activationFunction
 	 */
 	public void addHiddenLayer(int numberOfNeurons, ActivationFunction activationFunction) {
-		hiddenLayers.add(new HiddenLayer(numberOfNeurons, activationFunction));
+		hiddenLayers.add(new ProcessingLayer(numberOfNeurons, activationFunction));
 	}
 
 	/**
@@ -63,10 +62,7 @@ public class MultilayerPerceptron {
 	 * 
 	 * @param hiddenLayer
 	 */
-	public void addHiddenLayer(HiddenLayer hiddenLayer) throws NeuralNetworkBuildingException {
-
-//		if (this.inputLayer == null)
-//			throw new NeuralNetworkBuildingException("It is required set the input layer before adding a hidden layer");
+	public void addHiddenLayer(ProcessingLayer hiddenLayer) throws NeuralNetworkBuildingException {
 
 		Layer previousLayer;
 
@@ -92,11 +88,7 @@ public class MultilayerPerceptron {
 	public void setOutputLayer(int numberOfNeurons, ActivationFunction activationFunction)
 			throws NeuralNetworkBuildingException {
 
-//		if (this.inputLayer == null)
-//			throw new NeuralNetworkBuildingException(
-//					"It is required set the input layer before adding an output layer");
-
-		this.outputLayer = new OutputLayer(numberOfNeurons, activationFunction);
+		this.outputLayer = new ProcessingLayer(numberOfNeurons, activationFunction);
 
 		Layer previousLayer;
 
@@ -113,7 +105,7 @@ public class MultilayerPerceptron {
 	 * @param numberOfNeurons
 	 */
 	public void setOutputLayer(int numberOfNeurons) {
-		this.outputLayer = new OutputLayer(numberOfNeurons, new IdentityFunction());
+		this.outputLayer = new ProcessingLayer(numberOfNeurons, new IdentityFunction());
 	}
 
 	/**
@@ -156,5 +148,16 @@ public class MultilayerPerceptron {
 			dInputs[i] = new Double(inputs[i]);
 
 		return this.process(dInputs);
+	}
+
+	/**
+	 * 
+	 */
+	public void initializeWeightsRandomly() {
+		
+		for (ProcessingLayer h : this.hiddenLayers)
+			h.initializeWeightsRandomly();
+		
+		outputLayer.initializeWeightsRandomly();
 	}
 }
