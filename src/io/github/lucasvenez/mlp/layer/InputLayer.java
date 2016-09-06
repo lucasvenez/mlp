@@ -46,4 +46,9 @@ public class InputLayer implements Layer {
 		
 		return result;
 	}
+
+	@Override
+	public int getNumberOfNeurons() {
+		return this.neurons.size();
+	}
 }

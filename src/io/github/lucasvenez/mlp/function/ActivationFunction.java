@@ -1,6 +1,11 @@
 package io.github.lucasvenez.mlp.function;
 
-public interface ActivationFunction {
+import java.util.function.Function;
 
-	public double process(double input);
+public interface ActivationFunction extends Function<Double, Double>{
+
+	public Double apply(Double input);
+	
+	public Double derivative(Double input);
+	
 }

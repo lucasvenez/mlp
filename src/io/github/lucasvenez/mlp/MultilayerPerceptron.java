@@ -1,16 +1,20 @@
 package io.github.lucasvenez.mlp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import io.github.lucasvenez.math.random.DistributionGenerator;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkBuildingException;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.ActivationFunction;
 import io.github.lucasvenez.mlp.function.IdentityFunction;
-import io.github.lucasvenez.mlp.layer.ProcessingLayer;
 import io.github.lucasvenez.mlp.layer.InputLayer;
 import io.github.lucasvenez.mlp.layer.Layer;
+import io.github.lucasvenez.mlp.layer.ProcessingLayer;
+
+import static io.github.lucasvenez.utils.ArraysUtil.toObject;
+import static java.util.Arrays.copyOfRange;
+import static java.util.Arrays.asList;
 
 /**
  * 
@@ -21,8 +25,7 @@ public class MultilayerPerceptron {
 
 	private InputLayer inputLayer;
 
-	private final List<ProcessingLayer> hiddenLayers 
-							= new ArrayList<ProcessingLayer>();
+	private final List<ProcessingLayer> hiddenLayers = new ArrayList<ProcessingLayer>();
 
 	private ProcessingLayer outputLayer;
 
@@ -116,7 +119,7 @@ public class MultilayerPerceptron {
 	 * @throws NeuralNetworkFowardException
 	 */
 	public Double[] process(Double... inputs) throws NeuralNetworkFowardException {
-		return process(Arrays.asList(inputs)).toArray(new Double[outputLayer.getNeurons().size()]);
+		return process(asList(inputs)).toArray(new Double[outputLayer.getNumberOfNeurons()]);
 	}
 
 	/**
@@ -139,22 +142,6 @@ public class MultilayerPerceptron {
 
 	/**
 	 * 
-	 * @param inputs
-	 * @return
-	 * @throws NeuralNetworkFowardException
-	 */
-	public Double[] process(Integer... inputs) throws NeuralNetworkFowardException {
-
-		Double dInputs[] = new Double[inputs.length];
-
-		for (int i = 0; i < dInputs.length; i++)
-			dInputs[i] = new Double(inputs[i]);
-
-		return this.process(dInputs);
-	}
-
-	/**
-	 * 
 	 */
 	public void initializeWeightsRandomly() {
 		
@@ -162,5 +149,84 @@ public class MultilayerPerceptron {
 			h.initializeWeightsRandomly();
 		
 		outputLayer.initializeWeightsRandomly();
+	}
+	
+	public void initializeWeightsWithRandomUniformDistribution() {
+		
+		DistributionGenerator gen = new DistributionGenerator();
+
+		double[] uniform = gen.uniform(this.countWeights(), 0, 1);
+		
+		int offset = 0;
+		
+		for (ProcessingLayer p : this.getProcessingLayers()) {
+			
+			Double[] subset = 
+				toObject(
+					copyOfRange(
+						uniform, offset, offset + p.getNumberOfIncomingConnections()));
+			
+			p.setWeights(subset);
+			
+			offset += p.getNumberOfIncomingConnections();
+		}
+	}
+	
+	public int countWeights() {
+		
+		final List<Layer> layers = this.getLayers();
+		
+		int result = 0;
+		
+		for (int i = 1; i < layers.size(); i++) {
+			result += layers.get(i - 1).getNeurons().size() * 
+								layers.get(i).getNeurons().size();
+			
+			if (((ProcessingLayer)(layers.get(i))).hasBiases()) {
+				result += layers.get(i).getNeurons().size();
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Layer> getLayers() {
+		
+		final List<Layer> layers = new ArrayList<Layer>();
+		
+		layers.add(this.inputLayer);
+		
+		layers.addAll(this.hiddenLayers);
+		
+		layers.add(outputLayer);
+		
+		return layers;
+	}
+	
+	public List<ProcessingLayer> getProcessingLayers() {
+		
+		final List<ProcessingLayer> layers = new ArrayList<ProcessingLayer>();
+		
+		layers.addAll(this.hiddenLayers);
+		
+		layers.add(outputLayer);
+		
+		return layers;
+	}
+
+	public ProcessingLayer getOutputLayer() {
+		return this.outputLayer;
+	}
+
+	public ProcessingLayer getProcessingLayer(int index) {
+		return this.getProcessingLayers().get(index);
+	}
+
+	public List<ProcessingLayer> getHiddenLayers() {
+		return this.hiddenLayers;
+	}
+	
+	public int getNumberOfHiddenLayers() {
+		return this.hiddenLayers.size();
 	}
 }

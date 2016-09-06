@@ -12,5 +12,7 @@ import io.github.lucasvenez.mlp.neuron.Neuron;
 public interface Layer {
 
 	List<? extends Neuron<? extends Layer>> getNeurons();
+	
+	public int getNumberOfNeurons();
 
 }

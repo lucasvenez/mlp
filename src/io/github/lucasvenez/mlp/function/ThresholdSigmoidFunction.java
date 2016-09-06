@@ -16,8 +16,13 @@ public class ThresholdSigmoidFunction implements ActivationFunction {
 	}
 	
 	@Override
-	public double process(double input) {
-		return this.threshold.process(this.sigmoid.process(input));
+	public Double apply(Double input) {
+		return this.threshold.apply(this.sigmoid.apply(input));
+	}
+	
+	@Override
+	public Double derivative(Double input) {
+		return this.sigmoid.derivative(input);
 	}
 	
 	public void setThreshold(double threshold) {

@@ -10,6 +10,6 @@ public class InputNeuron extends Neuron<InputLayer> {
 	}
 
 	public Double process(Double input) {
-		return activationFunction.process(input);
+		return activationFunction.apply(input);
 	}
 }

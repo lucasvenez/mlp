@@ -9,7 +9,7 @@ import io.github.lucasvenez.mlp.neuron.ProcessingNeuron;
 
 public class ProcessingLayer implements Layer {
 
-	protected boolean biases = false;
+	protected boolean biases = true;
 
 	private Layer previousLayer;
 
@@ -130,5 +130,33 @@ public class ProcessingLayer implements Layer {
 	
 	public List<ProcessingNeuron> getNeurons() {
 		return this.neurons;
+	}
+	
+	public void setWeights(Double ... weights) {
+		
+		int j = 0;
+		
+		for (ProcessingNeuron neuron: this.neurons) {
+			
+			Double[] w = new Double[this.previousLayer.getNeurons().size() + (this.hasBiases() ? 1 : 0)];
+			
+			for (int i = 0; i < w.length; i++)
+				w[i] = weights[j++];
+			
+			neuron.setWeights(w);
+		}
+	}
+	
+	public int getNumberOfIncomingConnections() {
+		return (this.previousLayer.getNeurons().size() + (this.hasBiases() ? 1 : 0)) * this.neurons.size();
+	}
+
+	public ProcessingNeuron getNeuron(int index) {
+		return this.neurons.get(index);
+	}
+
+	@Override
+	public int getNumberOfNeurons() {
+		return this.neurons.size();
 	}
 }

@@ -6,12 +6,19 @@ package io.github.lucasvenez.mlp.function;
  */
 public class ThresholdFunction implements ActivationFunction {
 
-	private double threshold = 0.0;
+	private double threshold = 0.5;
 	
+	/**
+	 * 
+	 */
 	public ThresholdFunction() {
 		
 	}
 	
+	/**
+	 * 
+	 * @param threshold
+	 */
 	public ThresholdFunction(double threshold) {
 		this.threshold = threshold;
 	}
@@ -30,11 +37,20 @@ public class ThresholdFunction implements ActivationFunction {
 	 * @throws InvalidActivation
 	 */
 	@Override
-	public double process(double x) {
+	public Double apply(Double input) {
 
-		return x >= threshold ? 1.0 : 0.0;
+		return input >= threshold ? 1.0 : 0.0;
+	}
+	
+	@Override
+	public Double derivative(Double input) {
+		return 0.0;
 	}
 
+	/**
+	 * 
+	 * @param threshold
+	 */
 	public void setThreshold(double threshold) {
 		this.threshold = threshold;
 	}

@@ -35,39 +35,35 @@ public class MultilayerPerceptronTest {
 		
 		mlp.addHiddenLayer(6, new SigmoidFunction());
 		
-		mlp.addHiddenLayer(6, new SigmoidFunction());
-		
-		mlp.addHiddenLayer(6, new SigmoidFunction());
-		
 		mlp.setOutputLayer(1, new ThresholdSigmoidFunction());
 		
-		mlp.initializeWeightsRandomly();
+		assertEquals(new Integer(31), new Integer(mlp.countWeights()));
 		
 		/*
 		 * Training neural network
 		 */
 		Backpropagation back = new Backpropagation(mlp);
 
-		final int TRUE = 1, FALSE = 0;
+		final double TRUE = 1, FALSE = 0;
 	
-		final int AND = 0, OR = 1, XOR = 2;
+		final double AND = 0, OR = 1, XOR = 2;
 		
 		/*
 		 * Creating training data
 		 */
-		List<Integer[]> inputs = new ArrayList<Integer[]>();
-		List<Integer[]> outputs = new ArrayList<Integer[]>();
+		List<Double[]> inputs = new ArrayList<Double[]>();
+		List<Double[]> outputs = new ArrayList<Double[]>();
 
-		for (int i = 0; i < 2; i++)
-			for (int j = 0; j < 2; j++) {
-				inputs.add(new Integer[] {i,  j,  AND});
-				outputs.add(new Integer[] {i + j == 2 ? 1 : 0});
+		for (double i = 0; i < 2; i++)
+			for (double j = 0; j < 2; j++) {
+				inputs.add(new Double[] {i,  j,  AND});
+				outputs.add(new Double[] {i + j == 2 ? TRUE : FALSE});
 				
-				inputs.add(new Integer[] {i,  j,  OR});
-				outputs.add(new Integer[] {i + j > 0 ? 1 : 0});
+				inputs.add(new Double[] {i,  j,  OR});
+				outputs.add(new Double[] {i + j > 0 ? TRUE : FALSE});
 				
-				inputs.add(new Integer[] {i,  j,  XOR});
-				outputs.add(new Integer[] {i + j == 1 ? 1 : 0});
+				inputs.add(new Double[] {i,  j,  XOR});
+				outputs.add(new Double[] {i + j == 1 ? TRUE : FALSE});
 			}
 		
 		back.setTraineInput(inputs);
@@ -78,12 +74,20 @@ public class MultilayerPerceptronTest {
 		
 		/*
 		 * Using neural network
-		 */
+		 */		
+		assertEquals(new Double(FALSE), mlp.process(TRUE,  TRUE,  XOR)[0]);
+		assertEquals(new Double(TRUE),  mlp.process(TRUE,  FALSE, XOR)[0]);
+		assertEquals(new Double(TRUE),  mlp.process(FALSE, TRUE,  XOR)[0]);
+		assertEquals(new Double(FALSE), mlp.process(FALSE, FALSE, XOR)[0]);
 		
-		assertEquals(new Double(1.0), mlp.process(TRUE, TRUE, AND)[0]);
+		assertEquals(new Double(TRUE),  mlp.process(TRUE,  TRUE,  OR)[0]);
+		assertEquals(new Double(TRUE),  mlp.process(TRUE,  FALSE, OR)[0]);
+		assertEquals(new Double(TRUE),  mlp.process(FALSE, TRUE,  OR)[0]);
+		assertEquals(new Double(FALSE), mlp.process(FALSE, FALSE, OR)[0]);
 		
-		assertEquals(new Double(1.0), mlp.process(FALSE, TRUE, OR)[0]);
-		
-		assertEquals(new Double(0.0), mlp.process(TRUE, TRUE, XOR)[0]);
+		assertEquals(new Double(TRUE),  mlp.process(TRUE,  TRUE,  AND)[0]);
+		assertEquals(new Double(FALSE), mlp.process(TRUE,  FALSE, AND)[0]);
+		assertEquals(new Double(FALSE), mlp.process(FALSE, TRUE,  AND)[0]);
+		assertEquals(new Double(FALSE), mlp.process(FALSE, FALSE, AND)[0]);
 	}
 }
