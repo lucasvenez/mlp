@@ -13,18 +13,20 @@ import static java.util.Arrays.asList;
 /**
  * 
  * @author <a href="http://lucasvenez.github.io">Lucas Venezian Povoa</a>
- *
  */
 public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 
 	private final List<Double> weights = new ArrayList<Double>();
 
-	private Double lastInducedLocalField = null;
-	
-	private final List<Double> lastDeltaWeights = new ArrayList<Double>();
-
 	private final List<Double> lastInputs = new ArrayList<Double>();
+
+	private Double lastInduceLocalField = null;
 	
+	/**
+	 * 
+	 * @param activationFunction
+	 * @param processingLayer
+	 */
 	public ProcessingNeuron(ActivationFunction activationFunction, ProcessingLayer processingLayer) {
 		super(activationFunction, processingLayer);
 	}
@@ -61,7 +63,7 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 		for (int j = 0, i = this.parentLayer.hasBiases() ? 1 : 0; i < weights.size(); i++)
 			result += this.weights.get(i) * inputs.get(j++);
 
-		this.lastInducedLocalField = result;
+		this.lastInduceLocalField = result;
 		
 		return this.activationFunction.apply(result);
 	}
@@ -102,14 +104,16 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 			}
 		
 		this.weights.clear();
-		this.lastDeltaWeights.clear();
 		
 		for (Double w : weights) {
 			this.weights.add(w);
-			this.lastDeltaWeights.add(w);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param weights
+	 */
 	public void setWeights(Double ... weights) {
 		this.setWeights(asList(weights));
 	}
@@ -124,23 +128,6 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 
 	/**
 	 * 
-	 * @param weights
-	 */
-	public void updateWeights(Double momentum, Double learningRate, Double localGradient) {
-		
-		for (int i = 0; i < this.weights.size(); i++) {
-			
-			final Double w = this.weights.get(i) + //momentum * this.lastDeltaWeights.get(i) +
-							learningRate * localGradient * this.lastInputs.get(i);
-			
-			this.lastDeltaWeights.set(i, w - this.weights.get(i));
-			
-			this.weights.set(i, w);
-		}
-	}
-	
-	/**
-	 * 
 	 * @return
 	 */
 	public List<Double> getWeights() {
@@ -149,24 +136,34 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 
 	/**
 	 * 
+	 * @param index
 	 * @return
 	 */
-	public List<Double> getLastDeltaWeights() {
-		return this.lastDeltaWeights;
-	}
-	
-	/**
-	 * @return
-	 */
-	public Double getLastInducedLocalField() {
-		return this.lastInducedLocalField;
-	}
-
-	public Double derivativeOfLastInducedLocalField() {
-		return this.activationFunction.derivative(this.lastInducedLocalField);
-	}
-
 	public Double getWeight(int index) {
 		return this.weights.get(index);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Double> getLastInputs() {
+		return this.lastInputs;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLastInduceLocalField() {
+		return lastInduceLocalField;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double derivativeOfLastInducedLocalField() {
+		return this.activationFunction.derivative(this.lastInduceLocalField);
 	}
 }

@@ -12,6 +12,7 @@ import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.IdentityFunction;
 import io.github.lucasvenez.mlp.function.SigmoidFunction;
 import io.github.lucasvenez.mlp.function.ThresholdSigmoidFunction;
+import io.github.lucasvenez.mlp.training.Backpropagation;
 
 /**
  * This test uses weights and biases calculated with <a href="https://github.com/cbergmeir/RSNNS">RSNNS simulator</a>. This network receives three inputs:
