@@ -2,51 +2,60 @@ package io.github.lucasvenez.mlp.layer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import io.github.lucasvenez.mlp.neuron.ParallelProcessingNeuron;
+import io.github.lucasvenez.mlp.function.ActivationFunction;
+import io.github.lucasvenez.mlp.neuron.ProcessingNeuron;
 
-public class ParallelProcessingLayer implements Layer {
+public class ParallelProcessingLayer extends ProcessingLayer {
 
-	private final List<ParallelProcessingNeuron> neurons = 
-						new ArrayList<ParallelProcessingNeuron>();
+	public ParallelProcessingLayer(int numberOfNeurons, ActivationFunction activationFunction) {
+		super(numberOfNeurons, activationFunction);
+	}
 
-	
-	public List<Double> processInParallel(final List<Double> inputs) throws InterruptedException, ExecutionException {
-		
+	@Override
+	public List<Double> process(List<Double> inputs) {
+
 		List<Double> outputs = new ArrayList<Double>();
-		
-		int cores = Runtime.getRuntime().availableProcessors();
-		
-		ExecutorService executor = Executors.newFixedThreadPool(cores);
-		
+
+		final int CORES = 3;//Runtime.getRuntime().availableProcessors();
+
+		ExecutorService executor = Executors.newFixedThreadPool(CORES);
+
 		List<Future<Double>> list = new ArrayList<Future<Double>>();
 		
-		for (ParallelProcessingNeuron n : this.neurons) {
+		for (int i = 0; i < super.neurons.size(); i += CORES) {
 			
-			n.setInputs(inputs);
-			
-            Future<Double> submit = executor.submit(n);
-            
-            list.add(submit);
+			for (int j = 0; j < CORES && i + j < super.neurons.size(); j++) {
+
+				final ProcessingNeuron n = neurons.get(i + j);
+				
+				Future<Double> submit = executor.submit(new Callable<Double>() {
+
+					@Override
+					public Double call() throws Exception {
+						return n.process(inputs);
+					}
+				});
+
+				list.add(submit);
+			}
+		}
+
+		for (Future<Double> output : list) {
+			try {
+				outputs.add(output.get());
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		for (Future<Double> output : list)
-			outputs.add(output.get());
+		executor.shutdown();
 		
 		return outputs;
-	}
-	
-	@Override
-	public List<ParallelProcessingNeuron> getNeurons() {
-		return this.neurons;
-	}
-
-	@Override
-	public int getNumberOfNeurons() {
-		return this.neurons.size();
 	}
 }

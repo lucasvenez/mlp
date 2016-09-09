@@ -52,9 +52,8 @@ public class Backpropagation {
 			/*
 			 * for each input j
 			 */
-			for (int j = 0; j < traineInput.size(); j++) {
+			for (int j = 0; j < traineInput.size(); j++)
 				updateFunction.update(traineInput.get(j), traineOutput.get(j));
-			}
 		}
 	}
 

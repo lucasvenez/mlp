@@ -13,16 +13,13 @@ public class ProcessingLayer implements Layer {
 
 	private Layer previousLayer;
 
-	private final List<ProcessingNeuron> neurons = 
-			new ArrayList<ProcessingNeuron>();
-	
+	protected final List<ProcessingNeuron> neurons = new ArrayList<ProcessingNeuron>();
+
 	/**
 	 * 
 	 */
-	public ProcessingLayer() {
-		super();
-	}
-	
+	public ProcessingLayer() {}
+
 	/**
 	 * 
 	 * @param numberOfNeurons
@@ -33,19 +30,18 @@ public class ProcessingLayer implements Layer {
 		this(numberOfNeurons, activationFunction);
 		this.previousLayer = previousLayer;
 	}
-	
+
 	/**
 	 * 
 	 * @param numberOfNeurons
 	 * @param activationFunction
 	 */
 	public ProcessingLayer(int numberOfNeurons, ActivationFunction activationFunction) {
-		this();
 
 		for (int i = 0; i < numberOfNeurons; i++)
 			neurons.add(new ProcessingNeuron(activationFunction, this));
 	}
-	
+
 	/**
 	 * 
 	 * @param inputs
@@ -54,14 +50,14 @@ public class ProcessingLayer implements Layer {
 	 */
 	public List<Double> process(List<Double> inputs) throws NeuralNetworkFowardException {
 
-		List<Double> outputs = new ArrayList<Double>();
+		final List<Double> outputs = new ArrayList<Double>();
 
 		for (ProcessingNeuron n : neurons)
 			outputs.add(n.process(inputs));
 
 		return outputs;
 	}
-	
+
 	/**
 	 * 
 	 * @param biases
@@ -69,7 +65,7 @@ public class ProcessingLayer implements Layer {
 	protected ProcessingLayer(boolean biases) {
 		this.biases = biases;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -85,7 +81,7 @@ public class ProcessingLayer implements Layer {
 	public void setBiases(boolean biases) {
 		this.biases = biases;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -127,26 +123,26 @@ public class ProcessingLayer implements Layer {
 		for (ProcessingNeuron n : this.neurons)
 			n.initializeWeightsRandomly();
 	}
-	
+
 	public List<ProcessingNeuron> getNeurons() {
 		return this.neurons;
 	}
-	
-	public void setWeights(Double ... weights) {
-		
+
+	public void setWeights(Double... weights) {
+
 		int j = 0;
-		
-		for (ProcessingNeuron neuron: this.neurons) {
-			
+
+		for (ProcessingNeuron neuron : this.neurons) {
+
 			Double[] w = new Double[this.previousLayer.getNeurons().size() + (this.hasBiases() ? 1 : 0)];
-			
+
 			for (int i = 0; i < w.length; i++)
 				w[i] = weights[j++];
-			
+
 			neuron.setWeights(w);
 		}
 	}
-	
+
 	public int getNumberOfIncomingConnections() {
 		return (this.previousLayer.getNeurons().size() + (this.hasBiases() ? 1 : 0)) * this.neurons.size();
 	}

@@ -1,5 +1,9 @@
 package io.github.lucasvenez.mlp;
 
+import static io.github.lucasvenez.utils.ArraysUtil.toObject;
+import static java.util.Arrays.asList;
+import static java.util.Arrays.copyOfRange;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +12,11 @@ import io.github.lucasvenez.mlp.exception.NeuralNetworkBuildingException;
 import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.mlp.function.ActivationFunction;
 import io.github.lucasvenez.mlp.function.IdentityFunction;
+import io.github.lucasvenez.mlp.function.SigmoidFunction;
 import io.github.lucasvenez.mlp.layer.InputLayer;
 import io.github.lucasvenez.mlp.layer.Layer;
+import io.github.lucasvenez.mlp.layer.ParallelProcessingLayer;
 import io.github.lucasvenez.mlp.layer.ProcessingLayer;
-
-import static io.github.lucasvenez.utils.ArraysUtil.toObject;
-import static java.util.Arrays.copyOfRange;
-import static java.util.Arrays.asList;
 
 /**
  * 
@@ -228,5 +230,24 @@ public class MultilayerPerceptron {
 	
 	public int getNumberOfHiddenLayers() {
 		return this.hiddenLayers.size();
+	}
+
+	public void addParallelHiddenLayer(int numberOfNeurons, SigmoidFunction activationFunction) throws NeuralNetworkBuildingException {
+		this.addHiddenLayer(new ParallelProcessingLayer(numberOfNeurons, activationFunction));
+	}
+
+	public void setParallelOutputLayer(int numberOfNeurons, ActivationFunction activationFunction) {
+		
+		this.outputLayer = new ParallelProcessingLayer(numberOfNeurons, activationFunction);
+
+		Layer previousLayer;
+
+		if (this.hiddenLayers.size() > 0)
+			previousLayer = this.hiddenLayers.get(this.hiddenLayers.size() - 1);
+		else
+			previousLayer = this.inputLayer;
+
+		this.outputLayer.setPreviousLayer(previousLayer);
+		
 	}
 }

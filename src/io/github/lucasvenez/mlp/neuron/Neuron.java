@@ -64,5 +64,4 @@ public abstract class Neuron<T extends Layer> {
 	public void setActivationFunction(ActivationFunction activationFunction) {
 		this.activationFunction = activationFunction;
 	}
-	
 }

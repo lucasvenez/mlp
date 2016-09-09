@@ -12,6 +12,7 @@ public class OnlineUpdate implements Update {
 	private Double learningRate = 0.7;
 
 	public OnlineUpdate() {
+		
 	}
 	
 	@Override
