@@ -2,14 +2,9 @@ package io.github.lucasvenez.mlp.layer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import io.github.lucasvenez.mlp.function.ActivationFunction;
-import io.github.lucasvenez.mlp.neuron.ProcessingNeuron;
+import io.github.lucasvenez.mlp.neuron.ParallelProcessingNeuron;
 
 public class ParallelProcessingLayer extends ProcessingLayer {
 
@@ -17,45 +12,47 @@ public class ParallelProcessingLayer extends ProcessingLayer {
 		super(numberOfNeurons, activationFunction);
 	}
 
+	/**
+	 * It is slower than sequencial execution
+	 */
 	@Override
 	public List<Double> process(List<Double> inputs) {
 
 		List<Double> outputs = new ArrayList<Double>();
 
-		final int CORES = 3;//Runtime.getRuntime().availableProcessors();
+		final int CORES = 6;// Runtime.getRuntime().availableProcessors();
 
-		ExecutorService executor = Executors.newFixedThreadPool(CORES);
-
-		List<Future<Double>> list = new ArrayList<Future<Double>>();
+		final List<ParallelProcessingNeuron> parallelNeurons = new ArrayList<ParallelProcessingNeuron>();
+		final List<Thread> threads = new ArrayList<Thread>();
 		
 		for (int i = 0; i < super.neurons.size(); i += CORES) {
-			
+
 			for (int j = 0; j < CORES && i + j < super.neurons.size(); j++) {
 
-				final ProcessingNeuron n = neurons.get(i + j);
+				final ParallelProcessingNeuron parallelNeuron = 
+					new ParallelProcessingNeuron(super.neurons.get(i + j), inputs);
+
+				threads.add(new Thread(parallelNeuron));
+				parallelNeurons.add(parallelNeuron);
 				
-				Future<Double> submit = executor.submit(new Callable<Double>() {
-
-					@Override
-					public Double call() throws Exception {
-						return n.process(inputs);
-					}
-				});
-
-				list.add(submit);
+				threads.get(threads.size() - 1).start();
 			}
+			
+			for (int n = 0; n < threads.size(); n++) {
+				
+				try {
+					threads.get(n).join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				outputs.add(parallelNeurons.get(n).getOutput());
+			}
+			
+			parallelNeurons.clear();
+			threads.clear();
 		}
 
-		for (Future<Double> output : list) {
-			try {
-				outputs.add(output.get());
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		executor.shutdown();
-		
 		return outputs;
 	}
 }
