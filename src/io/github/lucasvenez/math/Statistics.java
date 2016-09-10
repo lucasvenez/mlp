@@ -35,4 +35,24 @@ public class Statistics {
 		
 		return result / sample.length;
 	}
+	
+	public double sum(double ... sample) {
+		
+		double result = 0.0;
+		
+		for (double d : sample)
+			result += d;
+		
+		return result;
+	}
+
+	public Double sum(Double ... sample) {
+		
+		Double result = 0.0;
+		
+		for (Double d : sample)
+			result += d;
+		
+		return result;
+	}
 }
