@@ -1,4 +1,4 @@
-package io.github.lucasvenez.ann.mlp.function;
+package io.github.lucasvenez.ann.function;
 
 import static java.lang.Math.max;
 

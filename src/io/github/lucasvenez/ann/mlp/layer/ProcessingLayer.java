@@ -3,8 +3,8 @@ package io.github.lucasvenez.ann.mlp.layer;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
-import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.function.ActivationFunction;
 import io.github.lucasvenez.ann.mlp.neuron.ProcessingNeuron;
 
 public class ProcessingLayer implements Layer {

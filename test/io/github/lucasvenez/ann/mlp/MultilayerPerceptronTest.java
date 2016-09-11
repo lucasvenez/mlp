@@ -11,12 +11,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
+import io.github.lucasvenez.ann.exception.NeuralNetworkBuildingException;
+import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.function.IdentityFunction;
+import io.github.lucasvenez.ann.function.SigmoidFunction;
+import io.github.lucasvenez.ann.function.ThresholdSigmoidFunction;
 import io.github.lucasvenez.ann.mlp.MultilayerPerceptron;
-import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkBuildingException;
-import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
-import io.github.lucasvenez.ann.mlp.function.IdentityFunction;
-import io.github.lucasvenez.ann.mlp.function.SigmoidFunction;
-import io.github.lucasvenez.ann.mlp.function.ThresholdSigmoidFunction;
 import io.github.lucasvenez.ann.mlp.training.Backpropagation;
 
 /**

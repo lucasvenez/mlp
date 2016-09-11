@@ -1,6 +1,6 @@
-package io.github.lucasvenez.ann.mlp.function;
+package io.github.lucasvenez.ann.function;
 
-import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.function.ActivationFunction;
 
 /**
  * 

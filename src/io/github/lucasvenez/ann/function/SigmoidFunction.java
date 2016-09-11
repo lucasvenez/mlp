@@ -1,9 +1,9 @@
-package io.github.lucasvenez.ann.mlp.function;
+package io.github.lucasvenez.ann.function;
 
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 
-import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.function.ActivationFunction;
 
 /**
  * 

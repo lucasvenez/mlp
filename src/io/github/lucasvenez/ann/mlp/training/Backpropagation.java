@@ -3,8 +3,8 @@ package io.github.lucasvenez.ann.mlp.training;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.ann.mlp.MultilayerPerceptron;
-import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.utils.ListsUtil;
 
 public class Backpropagation {

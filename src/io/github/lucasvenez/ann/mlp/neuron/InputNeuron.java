@@ -1,6 +1,6 @@
 package io.github.lucasvenez.ann.mlp.neuron;
 
-import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.function.ActivationFunction;
 import io.github.lucasvenez.ann.mlp.layer.InputLayer;
 
 public class InputNeuron extends Neuron<InputLayer> {

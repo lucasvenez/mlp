@@ -7,11 +7,11 @@ import static java.util.Arrays.copyOfRange;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkBuildingException;
-import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
-import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
-import io.github.lucasvenez.ann.mlp.function.IdentityFunction;
-import io.github.lucasvenez.ann.mlp.function.SigmoidFunction;
+import io.github.lucasvenez.ann.exception.NeuralNetworkBuildingException;
+import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.function.ActivationFunction;
+import io.github.lucasvenez.ann.function.IdentityFunction;
+import io.github.lucasvenez.ann.function.SigmoidFunction;
 import io.github.lucasvenez.ann.mlp.layer.InputLayer;
 import io.github.lucasvenez.ann.mlp.layer.Layer;
 import io.github.lucasvenez.ann.mlp.layer.ParallelProcessingLayer;
