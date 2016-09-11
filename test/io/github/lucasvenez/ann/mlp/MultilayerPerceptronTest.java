@@ -1,4 +1,4 @@
-package io.github.lucasvenez.mlp;
+package io.github.lucasvenez.ann.mlp;
 
 import static org.junit.Assert.assertEquals;
 
