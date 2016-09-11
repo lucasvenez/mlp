@@ -1,11 +1,11 @@
-package io.github.lucasvenez.mlp.layer;
+package io.github.lucasvenez.ann.mlp.layer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
-import io.github.lucasvenez.mlp.function.ActivationFunction;
-import io.github.lucasvenez.mlp.neuron.ProcessingNeuron;
+import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.mlp.neuron.ProcessingNeuron;
 
 public class ProcessingLayer implements Layer {
 

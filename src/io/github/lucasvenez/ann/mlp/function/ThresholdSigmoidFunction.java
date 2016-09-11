@@ -1,5 +1,9 @@
-package io.github.lucasvenez.mlp.function;
+package io.github.lucasvenez.ann.mlp.function;
 
+/**
+ * 
+ * @author <a href="http://lucasvenez.github.io/">Lucas Venezian Povoa</a>
+ */
 public class ThresholdSigmoidFunction implements ActivationFunction {
 
 	private ThresholdFunction threshold;
@@ -17,7 +21,7 @@ public class ThresholdSigmoidFunction implements ActivationFunction {
 	
 	@Override
 	public Double apply(Double input) {
-		return this.threshold.apply(this.sigmoid.apply(input));
+		return this.threshold.compose(this.sigmoid).apply(input);
 	}
 	
 	@Override

@@ -1,20 +1,22 @@
 package io.github.lucasvenez.ann.mlp.function;
 
-import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import static java.lang.Math.max;
 
 /**
  * 
  * @author <a href="http://lucasvenez.github.io/">Lucas Venezian Povoa</a>
  */
-public class IdentityFunction implements ActivationFunction {
+public class ReLUFunction implements ActivationFunction {
 
-	@Override
-	public Double apply(Double input) {
-		return input;
-	}
+	private Double threshold = 0.0;
 	
 	@Override
+	public Double apply(Double input) {
+		return max(this.threshold, input);
+	}
+
+	@Override
 	public Double derivative(Double input) {
-		return 1.0;
+		return input <= 0.0 ? this.threshold : 1.0;
 	}
 }

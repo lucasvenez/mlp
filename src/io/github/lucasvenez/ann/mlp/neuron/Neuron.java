@@ -1,7 +1,7 @@
-package io.github.lucasvenez.mlp.neuron;
+package io.github.lucasvenez.ann.mlp.neuron;
 
-import io.github.lucasvenez.mlp.function.ActivationFunction;
-import io.github.lucasvenez.mlp.layer.Layer;
+import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.mlp.layer.Layer;
 
 /**
  * 

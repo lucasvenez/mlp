@@ -1,12 +1,12 @@
-package io.github.lucasvenez.mlp.neuron;
+package io.github.lucasvenez.ann.mlp.neuron;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
-import io.github.lucasvenez.mlp.function.ActivationFunction;
-import io.github.lucasvenez.mlp.layer.Layer;
-import io.github.lucasvenez.mlp.layer.ProcessingLayer;
+import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+import io.github.lucasvenez.ann.mlp.layer.Layer;
+import io.github.lucasvenez.ann.mlp.layer.ProcessingLayer;
 
 import static java.util.Arrays.asList;
 
@@ -21,7 +21,7 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 	private final List<Double> lastInputs = new ArrayList<Double>();
 
 	private Double lastInduceLocalField = null;
-	
+
 	/**
 	 * 
 	 * @param activationFunction
@@ -40,31 +40,30 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 	public Double process(List<Double> inputs) throws NeuralNetworkFowardException {
 
 		if (inputs.size() + (parentLayer.hasBiases() ? 1 : 0) != this.weights.size())
-			throw new NeuralNetworkFowardException(
-				"The number of inputs (" + (inputs.size() + (parentLayer.hasBiases() ? 1 : 0)) + ") should be equals to the number of weights ("
-					+ (this.weights.size()) + ") at a neuron.");
+			throw new NeuralNetworkFowardException("The number of inputs ("
+					+ (inputs.size() + (parentLayer.hasBiases() ? 1 : 0))
+					+ ") should be equals to the number of weights (" + (this.weights.size()) + ") at a neuron.");
 
 		Double result = 0.0;
-		
+
 		lastInputs.clear();
-		
+
 		/*
-		 * If has bias we should consider
-		 * first weight and the value +1.0 as 
-		 * first input 
+		 * If has bias we should consider first weight and the value +1.0 as
+		 * first input
 		 */
 		if (this.parentLayer.hasBiases()) {
 			this.lastInputs.add(1.0);
 			result = this.weights.get(0);
 		}
-		
+
 		this.lastInputs.addAll(inputs);
-		
+
 		for (int j = 0, i = this.parentLayer.hasBiases() ? 1 : 0; i < weights.size(); i++)
 			result += this.weights.get(i) * inputs.get(j++);
 
 		this.lastInduceLocalField = result;
-		
+
 		return this.activationFunction.apply(result);
 	}
 
@@ -73,11 +72,11 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 	 */
 	public void initializeWeightsRandomly() {
 
-		int numberOfConnections = 0; 
-		
+		int numberOfConnections = 0;
+
 		if (this.parentLayer.getPreviousLayer() != null) {
 			numberOfConnections = this.parentLayer.getPreviousLayer().getNeurons().size();
-			
+
 			if (this.parentLayer.hasBiases())
 				numberOfConnections++;
 		}
@@ -92,29 +91,27 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 	 */
 	public void setWeights(List<Double> weights) {
 
-		
-		int n = this.parentLayer.getPreviousLayer().getNumberOfNeurons() + 
-				(this.parentLayer.hasBiases() ? 1 : 0);
-		
-		if (weights.size() !=  n)
+		int n = this.parentLayer.getPreviousLayer().getNumberOfNeurons() + (this.parentLayer.hasBiases() ? 1 : 0);
+
+		if (weights.size() != n)
 			try {
 				throw new Exception("Invalid number of weights. It is expected " + n + " but it was " + weights.size());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		
+
 		this.weights.clear();
-		
+
 		for (Double w : weights) {
 			this.weights.add(w);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param weights
 	 */
-	public void setWeights(Double ... weights) {
+	public void setWeights(Double... weights) {
 		this.setWeights(asList(weights));
 	}
 

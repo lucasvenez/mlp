@@ -1,8 +1,8 @@
-package io.github.lucasvenez.mlp.layer;
+package io.github.lucasvenez.ann.mlp.layer;
 
 import java.util.List;
 
-import io.github.lucasvenez.mlp.neuron.Neuron;
+import io.github.lucasvenez.ann.mlp.neuron.Neuron;
 
 /**
  * 

@@ -1,10 +1,14 @@
-package io.github.lucasvenez.mlp.function;
-
-import io.github.lucasvenez.mlp.function.ActivationFunction;
+package io.github.lucasvenez.ann.mlp.function;
 
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 
+import io.github.lucasvenez.ann.mlp.function.ActivationFunction;
+
+/**
+ * 
+ * @author <a href="http://lucasvenez.github.io/">Lucas Venezian Povoa</a>
+ */
 public class SigmoidFunction implements ActivationFunction {
 
 	private double alpha = 1.0;

@@ -1,8 +1,8 @@
-package io.github.lucasvenez.mlp.neuron;
+package io.github.lucasvenez.ann.mlp.neuron;
 
 import java.util.List;
 
-import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
 
 /**
  * 

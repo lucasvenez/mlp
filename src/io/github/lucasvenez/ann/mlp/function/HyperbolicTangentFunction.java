@@ -1,4 +1,4 @@
-package io.github.lucasvenez.mlp.function;
+package io.github.lucasvenez.ann.mlp.function;
 
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
@@ -6,7 +6,7 @@ import static java.lang.Math.pow;
 /**
  * 
  * @author <a href="http://lucasvenez.github.io/">Lucas Venezian Povoa</a>
- * @see http://math.stackexchange.com/questions/741050/hyperbolic-functions-derivative-of-tanh-x
+ * @see <a href="http://goo.gl/ggm241">Hyperbolic Functions</a>
  */
 public class HyperbolicTangentFunction implements ActivationFunction {
 

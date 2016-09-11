@@ -1,4 +1,4 @@
-package io.github.lucasvenez.mlp.function;
+package io.github.lucasvenez.ann.mlp.function;
 
 /**
  * The Threshold activation function.

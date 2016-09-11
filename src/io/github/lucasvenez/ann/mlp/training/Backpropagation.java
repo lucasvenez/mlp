@@ -1,10 +1,10 @@
-package io.github.lucasvenez.mlp.training;
+package io.github.lucasvenez.ann.mlp.training;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.mlp.MultilayerPerceptron;
-import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.mlp.MultilayerPerceptron;
+import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.utils.ListsUtil;
 
 public class Backpropagation {
@@ -15,7 +15,7 @@ public class Backpropagation {
 
 	private final List<Double[]> traineOutput = new ArrayList<Double[]>();
 
-	private int iterations = 20000;
+	private int iterations = 5000;
 
 	private boolean randomPresentation = true;
 

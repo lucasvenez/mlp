@@ -1,4 +1,4 @@
-package io.github.lucasvenez.mlp.exception;
+package io.github.lucasvenez.ann.mlp.exception;
 
 /**
  * 

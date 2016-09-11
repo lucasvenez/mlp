@@ -1,6 +1,6 @@
-package io.github.lucasvenez.mlp.training;
+package io.github.lucasvenez.ann.mlp.training;
 
-import io.github.lucasvenez.mlp.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.ann.mlp.exception.NeuralNetworkFowardException;
 
 public interface Update {
 

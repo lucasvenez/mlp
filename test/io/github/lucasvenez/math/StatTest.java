@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class StatisticsTest {
+import io.github.lucasvenez.stat.Stat;
 
-	private final Statistics stat = new Statistics();
+public class StatTest {
+
+	private final Stat stat = new Stat();
 	
 	@Test
 	public void meanTest() {
