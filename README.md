@@ -1,4 +1,4 @@
-# Multilayer Perceptron
+# Machine Learning Framework for Java (MLFJ) 
 
 It is an implementation of Multilayer Perceptron Neuron Network. The concepts are based on Simon Haykin (2009). Neural Networks and Learning Machines, 3rd edition. ISBN: 0-13-147139-2.
 

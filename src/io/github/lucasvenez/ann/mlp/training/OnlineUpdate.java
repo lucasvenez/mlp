@@ -1,9 +1,9 @@
 package io.github.lucasvenez.ann.mlp.training;
 
-import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.ann.mlp.MultilayerPerceptron;
 import io.github.lucasvenez.ann.mlp.layer.ProcessingLayer;
 import io.github.lucasvenez.ann.mlp.neuron.ProcessingNeuron;
+import io.github.lucasvenez.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.stat.Stat;
 
 public class OnlineUpdate implements Update {

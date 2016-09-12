@@ -11,13 +11,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
-import io.github.lucasvenez.ann.exception.NeuralNetworkBuildingException;
-import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.ann.function.IdentityFunction;
 import io.github.lucasvenez.ann.function.SigmoidFunction;
 import io.github.lucasvenez.ann.function.ThresholdSigmoidFunction;
 import io.github.lucasvenez.ann.mlp.MultilayerPerceptron;
 import io.github.lucasvenez.ann.mlp.training.Backpropagation;
+import io.github.lucasvenez.exception.NeuralNetworkBuildingException;
+import io.github.lucasvenez.exception.NeuralNetworkFowardException;
 
 /**
  * This network receives three inputs: two boolean values (0 = false, 1 = true)

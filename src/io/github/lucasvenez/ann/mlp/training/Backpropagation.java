@@ -3,9 +3,9 @@ package io.github.lucasvenez.ann.mlp.training;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.ann.mlp.MultilayerPerceptron;
-import io.github.lucasvenez.utils.ListsUtil;
+import io.github.lucasvenez.exception.NeuralNetworkFowardException;
+import io.github.lucasvenez.utils.ListUtils;
 
 public class Backpropagation {
 
@@ -19,7 +19,7 @@ public class Backpropagation {
 
 	private boolean randomPresentation = true;
 
-	private ListsUtil<Double[]> listsUtil = new ListsUtil<Double[]>();
+	private ListUtils<Double[]> listsUtil = new ListUtils<Double[]>();
 
 	private Update updateFunction = null;
 	

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ListsUtil<T extends Object> {
+public class ListUtils<T extends Object> {
 
 	/**
 	 * @param list

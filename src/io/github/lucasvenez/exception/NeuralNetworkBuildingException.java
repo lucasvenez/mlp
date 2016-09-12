@@ -1,4 +1,4 @@
-package io.github.lucasvenez.ann.exception;
+package io.github.lucasvenez.exception;
 
 public class NeuralNetworkBuildingException extends Exception {
 

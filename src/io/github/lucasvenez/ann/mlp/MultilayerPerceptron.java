@@ -1,14 +1,12 @@
 package io.github.lucasvenez.ann.mlp;
 
-import static io.github.lucasvenez.utils.ArraysUtil.toObject;
+import static io.github.lucasvenez.utils.ArrayUtils.toObject;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.copyOfRange;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lucasvenez.ann.exception.NeuralNetworkBuildingException;
-import io.github.lucasvenez.ann.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.ann.function.ActivationFunction;
 import io.github.lucasvenez.ann.function.IdentityFunction;
 import io.github.lucasvenez.ann.function.SigmoidFunction;
@@ -16,6 +14,8 @@ import io.github.lucasvenez.ann.mlp.layer.InputLayer;
 import io.github.lucasvenez.ann.mlp.layer.Layer;
 import io.github.lucasvenez.ann.mlp.layer.ParallelProcessingLayer;
 import io.github.lucasvenez.ann.mlp.layer.ProcessingLayer;
+import io.github.lucasvenez.exception.NeuralNetworkBuildingException;
+import io.github.lucasvenez.exception.NeuralNetworkFowardException;
 import io.github.lucasvenez.stat.random.UniformGenerator;
 
 /**

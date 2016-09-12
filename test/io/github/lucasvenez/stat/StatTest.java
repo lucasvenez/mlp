@@ -1,4 +1,4 @@
-package io.github.lucasvenez.math;
+package io.github.lucasvenez.stat;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,5 +24,13 @@ public class StatTest {
 		assertEquals(new Double(0.5), new Double(stat.sd(1, 2)));
 		
 		assertEquals(new Double(0.0), new Double(stat.sd(2, 2, 2, 2, 2)));
+	}
+	
+	@Test
+	public void modTest() {
+		
+		assertEquals(new Double(2.0), stat.mod(-2.0, 4.0));
+		
+		assertEquals(new Double(6.0), stat.mod(-4.0, 10.0));
 	}
 }
