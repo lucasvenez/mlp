@@ -120,4 +120,17 @@ public class MatrixUtilsTest {
 		
 		assertEquals(expect, utils.removeRowAndColumn(matrix, 1, 3));
 	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void identityTest() {
+		
+		Double[][] expect = new Double[][] {
+			{1.0, 0.0, 0.0},
+			{0.0, 1.0, 0.0},
+			{0.0, 0.0, 1.0}
+		};
+		
+		assertEquals(expect, utils.identity(3));
+	}
 }

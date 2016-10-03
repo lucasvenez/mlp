@@ -142,6 +142,17 @@ public class ProcessingLayer implements Layer {
 			neuron.setWeights(w);
 		}
 	}
+	
+	public void setWeights(double ... weights) {
+		
+		Double[] w = new Double[weights.length];
+		
+		for (int i = 0; i < w.length; i++)
+			w[i] = weights[i];
+		
+		setWeights(w);
+		
+	}
 
 	public int getNumberOfIncomingConnections() {
 		return (this.previousLayer.getNeurons().size() + (this.hasBiases() ? 1 : 0)) * this.neurons.size();

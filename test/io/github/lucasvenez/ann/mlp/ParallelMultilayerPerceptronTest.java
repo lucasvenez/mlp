@@ -24,7 +24,7 @@ import io.github.lucasvenez.exception.NeuralNetworkFowardException;
  * @author <a href="http://lucasvenez.github.io">Lucas Venezian Povoa</a>
  * 
  */
-public class MultilayerPerceptronTest {
+public class ParallelMultilayerPerceptronTest {
 
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
@@ -49,9 +49,9 @@ public class MultilayerPerceptronTest {
 
 		mlp.setInputLayer(3, new IdentityFunction());
 
-		mlp.addHiddenLayer(6, new SigmoidFunction());
+		mlp.addParallelHiddenLayer(100, new SigmoidFunction());
 		
-		mlp.setOutputLayer(1, new ThresholdSigmoidFunction());
+		mlp.setParallelOutputLayer(1, new ThresholdSigmoidFunction());
 
 		/*
 		 * Creating training data

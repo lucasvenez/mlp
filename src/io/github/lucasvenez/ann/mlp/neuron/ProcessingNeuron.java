@@ -1,5 +1,7 @@
 package io.github.lucasvenez.ann.mlp.neuron;
 
+import static java.util.Arrays.asList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +9,6 @@ import io.github.lucasvenez.ann.function.ActivationFunction;
 import io.github.lucasvenez.ann.mlp.layer.Layer;
 import io.github.lucasvenez.ann.mlp.layer.ProcessingLayer;
 import io.github.lucasvenez.exception.NeuralNetworkFowardException;
-
-import static java.util.Arrays.asList;
 
 /**
  * 
@@ -18,7 +18,7 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 
 	private final List<Double> weights = new ArrayList<Double>();
 
-	private final List<Double> lastInputs = new ArrayList<Double>();
+	private List<Double> lastInputs = new ArrayList<Double>();
 
 	private Double lastInduceLocalField = null;
 
@@ -145,6 +145,7 @@ public class ProcessingNeuron extends Neuron<ProcessingLayer> {
 	 * @return
 	 */
 	public List<Double> getLastInputs() {
+		
 		return this.lastInputs;
 	}
 

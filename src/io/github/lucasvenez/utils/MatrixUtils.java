@@ -1,15 +1,26 @@
 package io.github.lucasvenez.utils;
 
 import io.github.lucasvenez.exception.IncompatibleMatrixException;
+import io.github.lucasvenez.exception.InvertibleMatrixException;
 import io.github.lucasvenez.exception.NotSquaredMatrixException;
 import io.github.lucasvenez.stat.Stat;
 
 import static java.lang.Math.pow;
 
+/**
+ * 
+ * @author <a href="http://lucasvenez.github.io/">Lucas Venezian Povoa</a>
+ *
+ */
 public class MatrixUtils {
 
 	private final Stat stat = new Stat();
 
+	/**
+	 * 
+	 * @param matrix
+	 * @return
+	 */
 	public Double[][] transpose(Double[][] matrix) {
 
 		Double[][] result = new Double[matrix[0].length][matrix.length];
@@ -21,10 +32,27 @@ public class MatrixUtils {
 		return result;
 	}
 
-	public Double[][] inverse(Double[][] matrix) {
-		return null;
+	/**
+	 * 
+	 * @param matrix
+	 * @return
+	 * @throws InvertibleMatrixException 
+	 */
+	public Double[][] inverse(Double[][] matrix) throws InvertibleMatrixException {
+		
+		if (this.det(matrix) == 0.0)
+			throw new InvertibleMatrixException();
+		
+		return this.multipication(1.0/this.det(matrix), matrix);
 	}
 
+	/**
+	 * 
+	 * @param m1
+	 * @param m2
+	 * @return
+	 * @throws IncompatibleMatrixException
+	 */
 	public Double[][] sum(Double[][] m1, Double[][] m2) throws IncompatibleMatrixException {
 
 		this.checkCompatibilityOfMatrices(m1, m2);
@@ -38,6 +66,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param scalar
+	 * @param matrix
+	 * @return
+	 */
 	public Double[][] sum(Double scalar, Double[][] matrix) {
 
 		Double[][] result = new Double[matrix.length][matrix[0].length];
@@ -49,6 +83,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param matrix
+	 * @param scalar
+	 * @return
+	 */
 	public Double[][] sum(Double[][] matrix, Double scalar) {
 
 		Double[][] result = new Double[matrix.length][matrix[0].length];
@@ -60,6 +100,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param m1
+	 * @param m2
+	 * @return
+	 */
 	public Double[][] difference(Double[][] m1, Double[][] m2) {
 
 		this.checkCompatibilityOfMatrices(m1, m2);
@@ -73,6 +119,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param scalar
+	 * @param matrix
+	 * @return
+	 */
 	public Double[][] difference(Double scalar, Double[][] matrix) {
 
 		Double[][] result = new Double[matrix.length][matrix[0].length];
@@ -84,6 +136,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param matrix
+	 * @param scalar
+	 * @return
+	 */
 	public Double[][] difference(Double[][] matrix, Double scalar) {
 
 		Double[][] result = new Double[matrix.length][matrix[0].length];
@@ -95,6 +153,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param scalar
+	 * @param matrix
+	 * @return
+	 */
 	public Double[][] multipication(Double scalar, Double[][] matrix) {
 
 		Double[][] result = new Double[matrix.length][matrix[0].length];
@@ -158,6 +222,13 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param matrix
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public Double[][] removeRowAndColumn(Double[][] matrix, int row, int column) {
 
 		Double[][] result = new Double[matrix.length - 1][matrix[0].length - 1];
@@ -181,6 +252,12 @@ public class MatrixUtils {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param m1
+	 * @param m2
+	 * @throws IncompatibleMatrixException
+	 */
 	private void checkCompatibilityOfMatrices(Double[][] m1, Double[][] m2) throws IncompatibleMatrixException {
 
 		if (m1.length != m2.length || m1[0].length != m2[0].length)
@@ -220,4 +297,16 @@ public class MatrixUtils {
 
 		return result.toString();
 	}
+	
+	public Double[][] identity(int n) {
+		
+		Double[][] result = new Double[n][n];
+		
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				result[i][j] = i == j ? 1.0 : 0.0;
+		
+		return result;
+	}
 }
+	
